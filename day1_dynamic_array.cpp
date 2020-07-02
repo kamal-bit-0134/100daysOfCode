@@ -1,5 +1,5 @@
 /*
-question at https://www.hackerrank.com/challenges/2d-array/problem
+question at https://www.hackerrank.com/challenges/dynamic-array/problem
 */
 
 #include <bits/stdc++.h>
@@ -27,19 +27,25 @@ typedef map<string, int> msi;
 int main()
 {
     fast()
-        vi sum;
-    int arr[6][6];
-    REP(i, 0, 5)
-    REP(j, 0, 5)
-    cin >> arr[i][j];
-
-    REP(i, 0, 3)
-    REP(j, 0, 3)
+        vector<vi>
+            seq;
+    int n, q;
+    int lastAnswer = 0;
+    cin >> n >> q;
+    seq.resize(n);
+    REP(i, 0, q - 1)
     {
-        sum.push_back(arr[i][j] + arr[i][j + 1] + arr[i][j + 2] + arr[i + 1][j + 1] + arr[i + 2][j] + arr[i + 2][j + 1] + arr[i + 2][j + 2]);
-    }
+        int tag, x, y;
+        cin >> tag >> x >> y;
 
-    // REP(i, 0, 15)
-    // cout << sum[i] << " ";
-    cout << *max_element(sum.begin(), sum.end());
+        if (tag == 1)
+        {
+            seq[(x ^ lastAnswer) % n].push_back(y);
+        }
+        else
+        {
+            lastAnswer = seq[(x ^ lastAnswer) % n][y % seq[(x ^ lastAnswer) % n].size()];
+            cout << lastAnswer << "\n";
+        }
+    }
 }
